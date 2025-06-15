@@ -12,6 +12,7 @@ class Name(Field):
 		pass
 
 class Phone(Field):
+    #додавання валідації для номера телефону
     def __init__(self, value):
         counter = 0
         for symbol in value:
@@ -26,9 +27,11 @@ class Record:
         self.name = Name(name)
         self.phones = []
 
+    #Додавання номера телефону до запису
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
 
+    #Зміна номера телефону з валідацією
     def edit_phone(self, old_phone, new_phone):
         for i, phone in enumerate(self.phones):
             if phone.value == old_phone:
@@ -39,6 +42,7 @@ class Record:
                 return
         print("Phone number not found.")
 
+    #Пошук номера телефону в записі
     def find_phone(self, phone):
         for given_phone in self.phones:
             if given_phone.value == phone:
@@ -48,12 +52,15 @@ class Record:
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
 
 class AddressBook(UserDict):
+    # реалізація класу адресної книги
     def add_record(self, record):
         self.data[record.name.value] = record
 
+    # Додавання запису до адресної книги
     def find(self, name) -> Record:
         return self.data.get(name, None)
     
+    # Пошук запису за ім'ям
     def delete(self, name):
         if name in self.data:
             del self.data[name]
