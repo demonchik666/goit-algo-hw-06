@@ -26,12 +26,13 @@ class Record:
     #Додавання номера телефону до запису
     def add_phone(self, phone):
         self.phones.append(Phone(phone))
+	return None
 
     #Зміна номера телефону з валідацією
     def edit_phone(self, old_phone, new_phone):
-        self.find_phone(old_phone)  # Пошук старого номера
-        self.remove_phone(old_phone)  # Видаляємо старий номер
-        self.add_phone(new_phone)  # Додаємо новий номер
+        new_phone = Phone(new_phone)  # Перевірка валідності нового номера
+        self.remove_phone(old_phone)  # Знаходимо та видаляємо старий номер
+        self.phones.append(new_phone) # Додаємо новий номер
         return None
 
     #Пошук номера телефону в записі
@@ -40,7 +41,8 @@ class Record:
             if given_phone.value == phone:
                 return given_phone
         return None
-    
+
+    #Видалення номера телефону з запису
     def remove_phone(self, phone):
         if self.find_phone(phone) is None:
             raise ValueError(f"Phone number {phone} not found in record.")
